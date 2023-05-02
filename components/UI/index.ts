@@ -1,3 +1,4 @@
-import PNSButton from './PNS_Button';
+import Button from './Button';
+import {Badge} from './Badge';
 
-export { PNSButton };
+export { Button,Badge };

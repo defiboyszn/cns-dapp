@@ -1,4 +1,4 @@
-export interface IPNSButton {
+export interface ICNSButton {
   variant?: BtnVariant;
   text: string;
   full_width?: boolean;

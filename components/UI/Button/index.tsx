@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 
-import { IPNSButton, BtnVariant } from './types';
+import { ICNSButton, BtnVariant } from './types';
 
-const PNSButton = ({
+const Button = ({
   text,
   variant = BtnVariant.primary,
   full_width,
   on_click,
-}: IPNSButton) => {
+}: ICNSButton) => {
   const button_style = {
     'bg-black text-white': variant === BtnVariant.primary,
     'bg-transparent text-black border border-black':
@@ -32,4 +32,4 @@ const PNSButton = ({
   );
 };
 
-export default PNSButton;
+export default Button;

@@ -17,7 +17,9 @@ export default function Document() {
         <meta name="msapplication-TileColor" content="#FF1F6E" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="theme-color" content="#FF1F6E" />
-
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        {/* eslint-disable-next-line @next/next/no-title-in-document-head*/}
+        <title>Card Name Service</title>
         <link rel="manifest" href="/manifest/manifest.json" />
         <link rel="apple-touch-icon" href="/manifest/icon.png" />
       </Head>
