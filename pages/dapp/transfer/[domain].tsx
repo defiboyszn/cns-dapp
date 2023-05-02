@@ -34,7 +34,7 @@ const Transfer = () => {
         const provider = new ethers.BrowserProvider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(CONTRACT_ADDRESS as string, CNS.abi, await signer);
-        const domain = await contract.getDomain(name);
+        const domain = await contract?.getDomain(name);
 
         return domain;
     }
@@ -62,6 +62,8 @@ const Transfer = () => {
                 }))
                 const filtered = _data.filter(data => data?.owner?.toUpperCase() === (connectedAddress as any)?.toUpperCase())
                 setMintedDomain(filtered)
+                console.log(contract);
+                
             })
         }
         init()
@@ -110,7 +112,14 @@ const Transfer = () => {
         const provider = new ethers.BrowserProvider(ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(CONTRACT_ADDRESS as string, CNS.abi, await signer);
-        const domain = await contract.transfer(name, address);
+
+        await contract.approve(connectedAddress, 0);
+
+        // Transfer the domain
+        const transferTx = await contract.transfer(name, address);
+
+        // Wait for the transfer transaction to be mined
+        await transferTx.wait();
 
     }
 
@@ -162,7 +171,7 @@ const Transfer = () => {
                                                 transfer(router.query.domain as string, domain)
                                             }
                                                 // 
-                                                } />
+                                            } />
                                         </div>
                                     </div>
 
@@ -178,12 +187,12 @@ const Transfer = () => {
 
 Transfer.getLayout = function getLayout(page: ReactElement) {
     return (
-      <Layout>
-        {page}
-      </Layout>
+        <Layout>
+            {page}
+        </Layout>
     )
-  }
-  
+}
+
 
 
 export default Transfer;
