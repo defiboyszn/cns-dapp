@@ -87,7 +87,16 @@ const Dapp = () => {
                 </div>
 
                 <div className="button-container">
-                    <Button text="Search" on_click={()=> search(domain)} />
+                    <Button text="Search" on_click={() => {
+                        if (domain.length < 1) return;
+                        else
+                            search(domain)
+                    }} />
+                </div>
+                <div className="button-container">
+                    <Button text="Listed Domains" on_click={() => {
+                        router.push(`/dapp/domains`)
+                    }} />
                 </div>
 
             </div>
@@ -118,11 +127,11 @@ const Dapp = () => {
 
 Dapp.getLayout = function getLayout(page: ReactElement) {
     return (
-      <Layout>
-        {page}
-      </Layout>
+        <Layout>
+            {page}
+        </Layout>
     )
-  }
-  
+}
+
 
 export default Dapp;
