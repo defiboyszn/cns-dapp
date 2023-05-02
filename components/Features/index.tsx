@@ -7,11 +7,11 @@ export const Features = () => {
 
     return (
         <>
-            <div className="bg-cover h-full w-full" style={{
+            <div className="bg-cover h-full w-full overflow-x-hidden" style={{
                 background: "linear-gradient(159.24deg,#202020 52.47%,#050505 192.07%)"
             }}>
                 <div className="bg-[url('/images/bg.svg')] pb-10 gap-10 pt-10 h-full w-full flex flex-col justify-center items-center">
-                    <h1 className="font-Tanker text-[30px] md:text-[60px] text-white">Your username as wallet address</h1>
+                    <h1 className="font-Tanker text-[28px] md:text-[60px] text-white">Your username as wallet address</h1>
                     <p className="font-Helvetica_Now text-xl md:text-3xl w-[280px] md:w-[800px] text-center text-white">No more long address. Own your username, store an avatar and other profile data, and use it across services.</p>
                     <div className="px-10 border border-white/40 flex flex-row justify-center gap-7 items-center bg-white/[.03] w-[280px] md:w-[537px] rounded-[100px] h-[75px] md:h-[126px]">
                         <Image className="w-[45px] h-[45px] md:w-[75px] md:h-[75px]" src={"/images/cns_img.png"} alt="cns_img" width={75} height={75} />
@@ -26,7 +26,7 @@ export const Features = () => {
                     <div className="flex flex-col md:flex-row gap-5 md:gap-0 justify-center md:justify-between text-center md:text-left items-center w-full px-12">
                         <div>
                             <h1 className="font-Tanker text-[30px] md:text-[60px] w-[385px] text-white">A username for getting paid</h1>
-                            <p className="font-Helvetica_Now text-[22px] w-[fit] md:w-[385px] text-center md:text-left text-white">Make sending and receiving crypto simple. Replace long, complicated wallet addresses with your domain.</p>
+                            <p className="font-Helvetica_Now px-2 text-[22px] w-[fit] md:w-[385px] text-center md:text-left text-white">Make sending and receiving crypto simple. Replace long, complicated wallet addresses with your domain.</p>
 
                         </div>
                         <Image src={"/images/phone.png"} alt="phone" width={393} height={586} />
