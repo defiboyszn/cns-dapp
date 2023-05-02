@@ -7,9 +7,19 @@ export default function Layout({ children }: { children: ReactElement }) {
     return (
         <>
             <Head>
-                <meta name="description" content="$endTokens" />
                 <title>Card Name Service</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="title" content="Card Name Service" />
+                <meta name="description" content="CNS - Decentralized Identity" />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://trycns.vercel.app/" />
+                <meta property="og:title" content="Card Name Service" />
+                <meta property="og:description" content="CNS - Decentralized Identity" />
+                <meta property="og:image" content="/images/cns-post.png" />
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://trycns.vercel.app/" />
+                <meta property="twitter:title" content="Card Name Service" />
+                <meta property="twitter:description" content="CNS - Decentralized Identity" />
+                <meta property="twitter:image" content="/images/cns-post.png" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="font-DM_Sans">
