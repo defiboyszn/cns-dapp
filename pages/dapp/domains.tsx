@@ -1,16 +1,18 @@
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import CNS from "../../contracts/CNS.json"
 import Input from "@/components/UI/Input";
 import { Badge, Button } from "@/components/UI";
 import { useDollar } from "../../utils/useDollar";
 import Card from "@/components/UI/Card";
+import Layout from "@/layouts/default";
+import Link from "next/link";
 // import { Button } from "../UI"
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 const tld = process.env.TLD || ".card";
 
-const Dmains = () => {
+const Domains = () => {
 
 
     const router = useRouter()
@@ -58,7 +60,7 @@ const Dmains = () => {
                     dataa.avatar = data_[3];
                     return dataa
                 }))
-                const filtered = _data.filter(data => data?.owner?.toUpperCase() === (connectedAddress as any)?.toUpperCase())
+                const filtered = _data
                 setMintedDomain(filtered)
             })
         }
@@ -93,19 +95,19 @@ const Dmains = () => {
             <div className="bg-cover pt-32 h-full w-full" style={{
                 background: "linear-gradient(90deg,rgba(25,24,24,1.0),rgba(131,107,245,1.0))"
             }}>
-                <div className="bg-[url('/images/bg.svg')] gap-10 h-full w-full flex flex-col justify-center items-center">
+                <div className="bg-[url('/images/bg.svg')] pb-32 gap-10 h-full w-full flex flex-col justify-center items-center">
 
                     <div>
                         <div className="rounded-[10px] mx-0 py-5 px-5 bg-white/30 border-2 border-white/[0.10] w-[779px] h-[fit]">
-                            <h1 className="mr-3 mb-0 text-3xl font-extrabold text-white leading-[41px]">Profile</h1>
+                            <h1 className="mr-3 mb-0 text-3xl font-extrabold text-white leading-[41px]">Domains</h1>
                             <div className="rounded-[10px] mx-0 px-0 mt-5 bg-white/50 border-2 border-white/[0.10] w-[720px] h-[fit]">
                                 <div className="px-10 h-[fit] py-10 flex flex-col gap-5 justify-center">
-                                    <h1 className="mr-3 mb-0 text-3xl font-extrabold text-white leading-[41px]">Your Domains</h1>
-                                    <div className="grid grid-cols-2 gap-10 items-center">
+                                    <h1 className="mr-3 mb-0 text-3xl font-extrabold text-white leading-[41px]">All Domains</h1>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                                         {minted_domain.map((data: any, i) => {
-                                            return <div className="cursor-pointer" key={i}>
+                                            return <Link href={`/dapp/names/${data?.name}`} className="cursor-pointer" key={i}>
                                                 <Card imageSrc={data.image} title={data?.name?.toUpperCase()} />
-                                            </div>
+                                            </Link>
                                         })}
                                     </div>
 
@@ -119,4 +121,14 @@ const Dmains = () => {
     )
 }
 
-export default Dmains;
+Domains.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <Layout>
+        {page}
+      </Layout>
+    )
+  }
+  
+
+
+export default Domains;

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import CNS from "../../../contracts/CNS.json"
 import Input from "@/components/UI/Input";
@@ -7,6 +7,7 @@ import { Badge, Button } from "@/components/UI";
 import { useDollar } from "../../../utils/useDollar";
 import Link from "next/link";
 import { truncateAddress } from "@/utils/truncate";
+import Layout from "@/layouts/default";
 // import { Button } from "../UI"
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 const tld = process.env.TLD || ".card";
@@ -187,5 +188,14 @@ const Names = () => {
         </>
     )
 }
+
+Names.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <Layout>
+        {page}
+      </Layout>
+    )
+  }
+  
 
 export default Names;

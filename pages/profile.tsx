@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import CNS from "../contracts/CNS.json"
 import Input from "@/components/UI/Input";
@@ -8,11 +8,12 @@ import { useDollar } from "../utils/useDollar";
 import Card from "@/components/UI/Card";
 import { truncateAddress } from "@/utils/truncate";
 import Link from "next/link";
+import Layout from "@/layouts/default";
 // import { Button } from "../UI"
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 const tld = process.env.TLD || ".card";
 
-const Dmains = () => {
+const Profile = () => {
     const router = useRouter()
 
     const [minted_domain, setMintedDomain] = useState([] as {
@@ -90,10 +91,10 @@ const Dmains = () => {
     }, [])
     return (
         <>
-            <div className="bg-cover pt-32 pb-32 h-full w-full" style={{
+            <div className="bg-cover pt-32 h-full w-full" style={{
                 background: "linear-gradient(90deg,rgba(25,24,24,1.0),rgba(131,107,245,1.0))"
             }}>
-                <div className="bg-[url('/images/bg.svg')] gap-10 h-full w-full flex flex-col justify-center items-center">
+                <div className="bg-[url('/images/bg.svg')] pb-32 gap-10 h-full w-full flex flex-col justify-center items-center">
 
                     <div>
                         <div className="rounded-[10px] mx-0 py-5 px-5 bg-white/30 border-2 border-white/[0.10] w-[330px] md:w-[779px] h-[fit]">
@@ -134,4 +135,14 @@ const Dmains = () => {
     )
 }
 
-export default Dmains;
+
+Profile.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <Layout>
+        {page}
+      </Layout>
+    )
+  }
+  
+
+export default Profile;

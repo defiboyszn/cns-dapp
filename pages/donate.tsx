@@ -1,3 +1,5 @@
+import Layout from "@/layouts/default"
+import { ReactElement } from "react"
 
 
 export default function Donate() {
@@ -20,3 +22,12 @@ export default function Donate() {
         </>
     )
 }
+
+Donate.getLayout = function getLayout(page: ReactElement) {
+    return (
+      <Layout>
+        {page}
+      </Layout>
+    )
+  }
+  
