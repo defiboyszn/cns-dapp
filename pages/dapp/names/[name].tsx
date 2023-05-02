@@ -159,7 +159,7 @@ const Names = () => {
                     </div>
                     <div>
                         <div className="rounded-[10px] mx-0 py-5 px-3 md:px-5 bg-white/30 border-2 border-white/[0.10] w-[305px] md:w-[779px] h-[fit]">
-                            <h1 className="mr-3 mb-0 text-3xl font-extrabold text-white leading-[41px]"><Link href={`/profile`}>{minted_domain?.name}</Link></h1>
+                            <h1 className="mr-3 mb-0 text-3xl font-extrabold text-white leading-[41px]"><Link href={`${minted_domain?.owner === connectedAddress ?"/profile" : "#"}`}>{minted_domain?.name}</Link></h1>
                             <div className="rounded-[10px] mx-0 px-0 mt-5 bg-white/50 border-2 border-white/[0.10] w-[280px] md:w-[720px] h-[fit]">
                                 <div className="px-10 h-[fit] py-10 flex flex-col gap-5 justify-center">
                                     {minted_domain?.name ? (
