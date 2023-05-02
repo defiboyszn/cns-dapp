@@ -9,6 +9,7 @@ import Card from "@/components/UI/Card";
 import { truncateAddress } from "@/utils/truncate";
 import Link from "next/link";
 import Layout from "@/layouts/default";
+import { checkAndSwitchToMumbai } from "@/utils/network_check";
 // import { Button } from "../UI"
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 const tld = process.env.TLD || ".card";
@@ -88,6 +89,7 @@ const Profile = () => {
 
     useEffect(() => {
         checkIfWalletIsConnected();
+        checkAndSwitchToMumbai();
     }, [])
     return (
         <>

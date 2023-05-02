@@ -6,6 +6,7 @@ import CNS from "../../contracts/CNS.json"
 import Input from "@/components/UI/Input";
 import { Badge, Button } from "@/components/UI";
 import Layout from "@/layouts/default";
+import { checkAndSwitchToMumbai } from "@/utils/network_check";
 // import { Button } from "../UI"
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 const tld = process.env.TLD || ".card";
@@ -136,6 +137,7 @@ const Search = () => {
 
     useEffect(() => {
         checkIfWalletIsConnected();
+        checkAndSwitchToMumbai();
     }, [])
     return (
         <>

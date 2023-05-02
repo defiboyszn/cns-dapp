@@ -8,6 +8,7 @@ import { useDollar } from "../../utils/useDollar";
 import Card from "@/components/UI/Card";
 import Layout from "@/layouts/default";
 import Link from "next/link";
+import { checkAndSwitchToMumbai } from "@/utils/network_check";
 // import { Button } from "../UI"
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 const tld = process.env.TLD || ".card";
@@ -89,6 +90,7 @@ const Domains = () => {
 
     useEffect(() => {
         checkIfWalletIsConnected();
+        checkAndSwitchToMumbai();
     }, [])
     return (
         <>

@@ -5,6 +5,7 @@ import { Button } from '@/components/UI';
 import Input from '@/components/UI/Input';
 import { useRouter } from "next/router"
 import Layout from '@/layouts/default';
+import { checkAndSwitchToMumbai } from '@/utils/network_check';
 
 
 const tld = process.env.TLD || ".card";
@@ -105,6 +106,7 @@ const Dapp = () => {
 
     useEffect(() => {
         checkIfWalletIsConnected();
+        checkAndSwitchToMumbai();
     }, [])
     return (
         <div className="bg-[linear-gradient(159.24deg,#191919_52.47%,#0B3D91_192.07%)] h-screen">

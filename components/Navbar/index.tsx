@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../UI";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
+import { checkAndSwitchToMumbai } from "@/utils/network_check";
 
 export const Navbar = () => {
     const [currentAccount, setCurrentAccount] = useState('');
@@ -33,9 +34,6 @@ export const Navbar = () => {
         }
     }
 
-    useEffect(() => {
-        checkIfWalletIsConnected();
-    }, [])
 
     const connectWallet = async () => {
         try {
@@ -52,6 +50,13 @@ export const Navbar = () => {
             console.log(error)
         }
     }
+
+    
+    useEffect(() => {
+        checkIfWalletIsConnected();
+        checkAndSwitchToMumbai();
+    }, [])
+
 
     const itemVariants = {
         closed: {
