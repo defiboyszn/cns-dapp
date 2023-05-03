@@ -68,12 +68,7 @@ const Dapp = () => {
     }
     const renderNotConnectedContainer = () => (
         <div className="connect-wallet-container">
-            <h2 style={{
-                fontSize: "100px"
-            }}>💳</h2>
-            <button onClick={connectWallet} className="cta-button connect-wallet-button">
-                Connect Wallet
-            </button>
+            <Button text="Connect Wallet" on_click={connectWallet} />
         </div>
     );
 
