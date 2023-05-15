@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useSearchParams } from 'next/navigation';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 // import { ethers } from "ethers";
 // import { useContractRead } from 'wagmi'
 import { CNS } from "../../contracts/CNS"
@@ -27,7 +27,7 @@ const Search = () => {
     const [price, setPrice] = useState('');
     useEffect(() => {
         setDomain(_search as string);
-    }, [])
+    }, [_search])
     useEffect(() => {
         const price = domain?.length === 3 ? '0.10' : domain?.length === 4 ? '0.4' : '0.2';
 
@@ -40,7 +40,7 @@ const Search = () => {
         image: string;
     });
 
-    const getDomain = async (name: string) => {
+    const getDomain = useCallback(async (name: string) => {
         const data = await readContract({
             // @ts-ignore
             address: CONTRACT_ADDRESS[chain?.id as number],
@@ -50,7 +50,7 @@ const Search = () => {
         })
 
         return data as any;
-    }
+    },[chain?.id])
     useEffect(() => {
         const init = async () => {
             const data__ = await readContract({

@@ -65,7 +65,7 @@ export function Connect() {
 
 		login()
 
-	}, [selected])
+	}, [isConnected, openConnectModal, selected])
 
 
 	// checks if a user is connected 
