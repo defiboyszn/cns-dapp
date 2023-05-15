@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import CNS from "../../contracts/CNS.json"
 import { readContract } from '@wagmi/core'
@@ -31,7 +31,7 @@ const Domains = () => {
     // @ts-ignore
     const [connectedAddress, setConnectedAddress] = useState();
 
-    const getDomain = async (name: string) => {
+    const getDomain = useCallback(async (name: string) => {
         const data = await readContract({
             // @ts-ignore
             address: CONTRACT_ADDRESS[chain?.id as number],
@@ -41,7 +41,7 @@ const Domains = () => {
         })
 
         return data as any;
-    }
+    },[chain?.id])
     useEffect(() => {
         const init = async () => {
             const data__ = await readContract({
