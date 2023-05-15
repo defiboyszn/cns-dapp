@@ -23,3 +23,5 @@ Dashboard.getLayout = function getLayout(page: ReactElement) {
     </Layout>
   )
 }
+
+export default Dashboard;
