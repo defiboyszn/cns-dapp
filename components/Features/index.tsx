@@ -71,7 +71,7 @@ export const Features = () => {
                             {/* <Image src={"/images/cns_img.png"} alt="cns_img" width={75} height={75} />
                             <h1 className="font-Tanker text-[28px] text-white">tobi.card</h1> */}
 
-                            <Button text="Join Telegram" />
+                            <Button text="Join Telegram" on_click={()=> router.push("https://t.me/cardnameprotocol")} />
                         </div>
                     </div>
                 </div>
