@@ -67,11 +67,11 @@ export const Features = () => {
 
 
                         <div className="px-10 border-2 border-white/50 flex flex-col justify-center gap-7 items-center bg-white/[.2] w-[270px] md:w-[893px] rounded-[25px] h-[341.6px]">
-                            <p className="font-Helvetica_Now text-[20px] md:text-[34px] w-fit md:w-[608px] text-center text-white">Join The CNS Community On Discord</p>
+                            <p className="font-Helvetica_Now text-[20px] md:text-[34px] w-fit md:w-[608px] text-center text-white">Join The CNS Community On Telegram</p>
                             {/* <Image src={"/images/cns_img.png"} alt="cns_img" width={75} height={75} />
                             <h1 className="font-Tanker text-[28px] text-white">tobi.card</h1> */}
 
-                            <Button text="Join Discord" />
+                            <Button text="Join Telegram" />
                         </div>
                     </div>
                 </div>

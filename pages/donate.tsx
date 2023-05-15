@@ -7,7 +7,7 @@ export default function Donate() {
     const [copiedText,setCopiedText] = useState("")
     return (
         <>
-            <div className="bg-[linear-gradient(159.24deg,#191919_52.47%,#0B3D91_192.07%)] h-screen">
+            <div className="bg-[linear-gradient(159.24deg,#191919_52.47%,#005741_192.07%)] h-screen">
                 <div className="flex flex-col justify-center items-center h-screen">
                     <div className="rounded-[10px] mx-0 py-5 px-5 text-white bg-white/30 border-2 border-white/[0.10] w-[275px] md:w-[779px] h-[fit]">
                         <p className="text-lg font-medium mb-2">Support Our Project</p>

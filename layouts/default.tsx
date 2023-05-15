@@ -1,9 +1,19 @@
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import Head from 'next/head'
+import { useAccount } from 'wagmi'
+import { useRouter } from 'next/router'
+
 
 export default function Layout({ children }: { children: ReactElement }) {
+    const { isConnected } = useAccount()
+    const router = useRouter();
+    // useEffect(()=> {
+    //     if (!isConnected) {
+    //         router.push("/")
+    //     }
+    // },[router])
     return (
         <>
             <Head>

@@ -1,77 +1,22 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { ethers } from "ethers";
-import CNS from "../contracts/CNS.json"
 import { Button } from '@/components/UI';
 import Input from '@/components/UI/Input';
 import { useRouter } from "next/router"
 import Layout from '@/layouts/default';
-import { checkAndSwitchToMumbai } from '@/utils/network_check';
+import { useAccount,useNetwork } from 'wagmi'
 
 
 const tld = process.env.TLD || ".card";
 const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
 
 const Dapp = () => {
-    const router = useRouter()
-
-    const [currentAccount, setCurrentAccount] = useState('');
+    const router = useRouter();
     const [domain, setDomain] = useState('');
     const search = (name: string) => {
         router.push(`/dapp/search?keywords=${name}`);
     }
-
-    const connectWallet = async () => {
-        try {
-            // @ts-ignore
-            const { ethereum } = window;
-
-            if (!ethereum) {
-                alert("Get MetaMask -> https://metamask.io/");
-                return;
-            }
-
-            // Fancy method to request access to account.
-            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-
-            // Boom! This should print out public address once we authorize Metamask.
-            console.log("Connected", accounts[0]);
-            setCurrentAccount(accounts[0]);
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    // Gotta make sure this is async.
-    const checkIfWalletIsConnected = async () => {
-        // First make sure we have access to window.ethereum
-        // @ts-ignore
-        const { ethereum } = window;
-
-        if (!ethereum) {
-            console.log("Make sure you have MetaMask!");
-            return;
-        } else {
-            console.log("We have the ethereum object", ethereum);
-        }
-
-        // Check if we're authorized to access the user's wallet
-        const accounts = await ethereum.request({ method: 'eth_accounts' });
-
-        // Users can have multiple authorized accounts, we grab the first one if its there!
-        if (accounts.length !== 0) {
-            const account = accounts[0];
-            console.log('Found an authorized account:', account);
-            setCurrentAccount(account);
-        } else {
-            console.log('No authorized account found');
-        }
-    }
-    const renderNotConnectedContainer = () => (
-        <div className="connect-wallet-container">
-            <Button text="Connect Wallet" on_click={connectWallet} />
-        </div>
-    );
-
+    const { isConnected } = useAccount();
+    
     const renderInputForm = () => {
         return (
             <div className="flex flex-col justify-center items-center gap-5 mt-10">
@@ -99,12 +44,8 @@ const Dapp = () => {
         );
     }
 
-    useEffect(() => {
-        checkIfWalletIsConnected();
-        checkAndSwitchToMumbai();
-    }, [])
     return (
-        <div className="bg-[linear-gradient(159.24deg,#191919_52.47%,#0B3D91_192.07%)] h-screen">
+        <div className="bg-[linear-gradient(90deg,rgba(25,24,24,1.0),#005741)] h-screen">
             <div className="flex flex-col justify-center items-center h-screen">
 
                 <div>
@@ -114,9 +55,7 @@ const Dapp = () => {
                         </div>
                     </header>
                 </div>
-
-                {!currentAccount && renderNotConnectedContainer()}
-                {currentAccount && renderInputForm()}
+                {isConnected && renderInputForm()}
             </div>
         </div>
     );

@@ -1,25 +1,33 @@
 import { useRouter } from "next/router"
 import { useSearchParams } from 'next/navigation';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { ethers } from "ethers";
-import CNS from "../../contracts/CNS.json"
+// import { ethers } from "ethers";
+// import { useContractRead } from 'wagmi'
+import { CNS } from "../../contracts/CNS"
 import Input from "@/components/UI/Input";
 import { Badge, Button } from "@/components/UI";
 import Layout from "@/layouts/default";
-import { checkAndSwitchToMumbai } from "@/utils/network_check";
-// import { Button } from "../UI"
-const CONTRACT_ADDRESS = "0xC571c33E97c0C64af44549268ddfC998b49Fe225";
+import { readContract } from '@wagmi/core'
+import { useAccount } from "wagmi";
+import { useNetwork } from 'wagmi'
+
+const CONTRACT_ADDRESS = { 80001: "0x4Ad97a7F369234eBD3BA881A5e1A454a8f5FDC01", 7001: "0x2354e4bd732bCac3c16F78F10f2fef8E081Cf94e" };
 const tld = process.env.TLD || ".card";
 
 const Search = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    const [currentAccount, setCurrentAccount] = useState('');
+    const { isConnected } = useAccount()
+    const { chain } = useNetwork()
+
 
     const _search = searchParams.get('keywords');
     const [domain, setDomain] = useState(_search as string);
     const [price, setPrice] = useState('');
+    useEffect(() => {
+        setDomain(_search as string);
+    }, [])
     useEffect(() => {
         const price = domain?.length === 3 ? '0.10' : domain?.length === 4 ? '0.4' : '0.2';
 
@@ -28,49 +36,50 @@ const Search = () => {
     const [minted_domain, setMintedDomain] = useState({} as {
         name: string;
         owner: string;
-        resolver: string;
+        avatar: string;
         image: string;
     });
 
     const getDomain = async (name: string) => {
-        // @ts-ignore
-        const { ethereum } = window;
-        const provider = new ethers.BrowserProvider(ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(CONTRACT_ADDRESS as string, CNS.abi, await signer);
-        const domain = await contract.getDomain(name);
+        const data = await readContract({
+            // @ts-ignore
+            address: CONTRACT_ADDRESS[chain?.id as number],
+            abi: CNS.abi,
+            functionName: 'getDomain',
+            args: [name]
+        })
 
-        return domain;
+        return data as any;
     }
     useEffect(() => {
         const init = async () => {
-            // @ts-ignore
-            const { ethereum } = window;
-            const provider = new ethers.BrowserProvider(ethereum);
-            const signer = provider.getSigner();
-            const contract = new ethers.Contract(CONTRACT_ADDRESS as string, CNS.abi, await signer);
-            contract.getAllNames().then(async data => {
-                const _data = await Promise.all(data.map(async (data$: string) => {
-                    const data_ = await getDomain(data$.split(".")[0])
-                    let dataa = {} as {
-                        name: string;
-                        owner: string;
-                        avatar: string;
-                        image: string;
-                    };
-                    dataa.owner = data_[0];
-                    dataa.name = data_[1];
-                    dataa.image = data_[2];
-                    dataa.avatar = data_[3];
-                    return dataa
-                }))
+            const data__ = await readContract({
+                // @ts-ignore
+                address: CONTRACT_ADDRESS[chain?.id as number],
+                abi: CNS.abi,
+                functionName: 'getAllNames',
+            });
 
-                const filtered = _data.filter(data => data.name === domain + tld)[0]
-                setMintedDomain(filtered)
-            })
+            const _data = await Promise.all((data__ as any).map(async (data$: string) => {
+                const data_ = await getDomain(data$.split(".")[0])
+                let dataa = {} as {
+                    name: string;
+                    owner: string;
+                    avatar: string;
+                    image: string;
+                };
+                dataa.owner = data_.owner;
+                dataa.name = data_.name;
+                dataa.image = data_.image;
+                dataa.avatar = data_.avatar;
+                return dataa
+            }))
+
+            const filtered = _data.filter(data => data.name === domain + tld)[0]
+            setMintedDomain(filtered)
         }
         init()
-    }, [domain, minted_domain])
+    }, [chain?.id, domain, getDomain, minted_domain])
 
     const search = async (name: string) => {
         let domain = await getDomain(name);
@@ -113,39 +122,13 @@ const Search = () => {
         );
     }
 
-
-    const checkIfWalletIsConnected = async () => {
-        // First make sure we have access to window.ethereum
-        // @ts-ignore
-        const { ethereum } = window;
-
-        if (!ethereum) {
-            console.log("Make sure you have MetaMask!");
-            return;
-        } else {
-            console.log("We have the ethereum object", ethereum);
-        }
-        const accounts = await ethereum.request({ method: 'eth_accounts' });
-        if (accounts.length !== 0) {
-            const account = accounts[0];
-            console.log('Found an authorized account:', account);
-            setCurrentAccount(account);
-        } else {
-            console.log('No authorized account found');
-        }
-    }
-
-    useEffect(() => {
-        checkIfWalletIsConnected();
-        checkAndSwitchToMumbai();
-    }, [])
     return (
         <>
             <div className="bg-cover h-screen w-full" style={{
                 background: "linear-gradient(159.24deg,#202020 52.47%,#050505 192.07%)"
             }}>
                 <div className="bg-[url('/images/bg.svg')] gap-10 h-screen w-full flex flex-col justify-center items-center">
-                    {currentAccount && renderInputForm()}
+                    {isConnected && renderInputForm()}
                 </div>
             </div>
         </>
@@ -154,12 +137,12 @@ const Search = () => {
 
 Search.getLayout = function getLayout(page: ReactElement) {
     return (
-      <Layout>
-        {page}
-      </Layout>
+        <Layout>
+            {page}
+        </Layout>
     )
-  }
-  
+}
+
 
 
 
