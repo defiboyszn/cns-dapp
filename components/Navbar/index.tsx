@@ -72,7 +72,10 @@ export const Navbar = () => {
                 </div>
 
 
-                <div className="block md:hidden">
+                <div className="flex md:hidden flex-row items-center gap-4">
+                    <div className="flex flex-row items-center gap-1">
+                        <Connect />
+                    </div>
                     {/* @ts-ignore */}
                     <button onClick={cycleOpen}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-white">
@@ -136,12 +139,11 @@ export const Navbar = () => {
                                     </Link>
                                 </div>
                                 {/* <Button text={currentAccount ? "Profile" : "Connect Wallet"} on_click={currentAccount ? () => router.push("/profile") : connectWallet} /> */}
-                                <div className="flex flex-row items-center gap-10">
-                                    {/* @ts-ignore */}
-                                    <div onClick={cycleOpen} className="flex flex-row items-center gap-1">
+                                {/* <div className="flex flex-row items-center gap-10">
+                                    <div className="flex flex-row items-center gap-1">
                                         <Connect />
                                     </div>
-                                </div>
+                                </div> */}
                             </motion.div>
                         </motion.div>
                     )}
